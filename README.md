@@ -1,3 +1,5 @@
+HPDM172 Git Tutorial - University of Exeter - 2024
+
 What is Git ?
 =============
 
@@ -36,12 +38,12 @@ other people who download the project.
     $ git config --global user.name "Your Name"
     $ git config --global user.email your.email@example.com
 
-As a helpful step, you may want to set Git to use your favourite editor
+As a helpful step, if you're run Linux, you may want to set Git to use your favourite editor
 
     $ git config --global core.editor emacs
 
-Starting your journey
----------------------
+First steps - starting with Git on command line
+-----------------------------------------------
 
 First, clone this repository:
 
@@ -448,6 +450,7 @@ in the add and multiply sections.
 
     $ code.txt
 
+For example:
 Swap "sum = num1 + num2;" for "sum = num2 + num1;"
 Swap "product = num1 * num2" for "product = num2 * num1"
 Close and save the code.txt file.
@@ -508,16 +511,13 @@ better (Ask for help if stumped)
 Once I have done that, I can then mark the conflict as fixed by using
 `git add` and `git commit`.
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Help-browser.svg/20px-Help-browser.svg.png)
-Stuck? Ask for help from the workshop staff
-
     $ git add gamow.txt
     $ git commit -m "Fixed conflict"
 
 Congratulations. You have fixed the conflict. All is good in the world.
 
-Fin
----
+The End
+-------
 
 You have learnt :
 
@@ -594,8 +594,8 @@ Let’s collaborate !
 Check out the `pull_request` branch on this repository for further instructions!
 You can always get back to this version of the readme by checking out the master branch.
 
-Fin
----
+The End
+-------
 
 You have learnt:
 
