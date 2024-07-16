@@ -8,7 +8,7 @@ Git is a *distributed* **version control** system [1]
 Getting Git
 -----------
 
-Some house-cleaning here. We assume of course you have Git installed,
+This tutorial assumes you have Git installed,
 (hopefully \>= 1.7.0).
 
 On windows, you can check which version of Git is installed using 
@@ -30,7 +30,7 @@ install [Github's git GUI](https://help.github.com/articles/set-up-git/).
 Setup
 -----
 
-First thing to do is to setup your identity. This identifies you to
+For setup something you can do to start is setup your identity. This identifies you to
 other people who download the project.
 
     $ git config --global user.name "Your Name"
@@ -45,7 +45,7 @@ Starting your journey
 
 First, clone this repository:
 
-    $ git clone https://github.com/kuahyeow/git-workshop.git
+    $ git clone https://github.com/neilvaughan/git-workshop.git
 
 You may want to fork (create your own copy of) the project on github and
 clone from your own repo. You can find the fork button at the top right of
@@ -54,20 +54,45 @@ the screen on a github repository, or more help about doing that [here](https://
 Once you have cloned your repository, you should now see a directory
 called `git-workshop`. This is your `working directory`
 
+Now try to run this command:
+    $ git add
+
+This will cause an error because we have not navigated into the git repository folder yet:
+
+![image](https://github.com/user-attachments/assets/e040f572-f5ca-437d-a990-cdfed7005552)
+
+Next, move into the git repository folder and list the contents, by using these commands:
+
     $ cd git-workshop
-    $ ls
+    $ dir
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Help-browser.svg/20px-Help-browser.svg.png)
-Stuck? Ask for help from the workshop staff
+![image](https://github.com/user-attachments/assets/09d9d9ce-97fb-4ded-b804-277595754665)
 
-For the curious, you should also see the `.git` subdirectory. This is
+To explore further, you can also check to see if there are also hidden files.
+
+    $ dir /a:h
+
+![image](https://github.com/user-attachments/assets/8636fc9d-e724-4daa-b85e-4c280349dad1)
+
+You should also see hidden the `.git` subdirectory. This is
 where all your repository’s data and history is kept.
 
-    $ ls -a .git
+    $ cd .git
+    $ dir
 
 You will see :
 
     branches  config  description  HEAD  hooks  info  objects  refs
+
+Now you can navigate back to the parent folder. 
+
+    $ cd ..
+
+If you no longer wanted to have this cloned repository on your 
+local machine, you can simply delete the whole folder. That won't
+have any effect on the remote server's copy of the repository.
+You could then clone the repository again later on if you wanted to
+by using the same method we have just done.
 
 The staging area
 ----------------
@@ -75,9 +100,16 @@ The staging area
 Now, let’s try adding some files into the project. Create a couple of
 files.
 
-Let’s create two files named `bob.txt` and `alice.txt`.
+Let’s create two files named `test.txt` and `file2.txt`.
 
-    $ touch alice.txt bob.txt
+    $ echo hello > text.txt
+    $ echo file contents > file2.txt
+
+To verify that the files have been created, type:
+
+    $ file2.txt
+
+This should open up one of the new text files and show some text inside it.
 
 Let’s use a mail analogy.
 
@@ -88,7 +120,7 @@ You finalize the process and record it into the git index by using
 
 Let’s add the files to the staging area
 
-    $ git add alice.txt bob.txt
+    $ git add test.txt file2.txt
 
 Committing
 ----------
@@ -97,9 +129,6 @@ You are now ready to commit. The `-m` flag allows you to enter a message
 to go with the commit at the same time.
 
     $ git commit -m "I am adding two new files"
-
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Help-browser.svg/20px-Help-browser.svg.png)
-Stuck? Ask for help from the workshop staff
 
 Let’s see what just happened
 ----------------------------
@@ -124,69 +153,93 @@ involved in each commit. To view more information about a commit, use
 You should see something similar to:
 
     commit 5a1fad96c8584b2c194c229de7e112e4c84e5089
-    Author: kuahyeow 
-    Date:   Sun Jul 17 19:13:42 2011 +1200
+    Author: NeilVaughan
+    Date:   Sun Jul 16 13:13:42 2024 +0100
 
         I am adding two new files
 
-    diff --git a/alice.txt b/alice.txt
-    new file mode 100644
-    index 0000000..e69de29
-    diff --git a/bob.txt b/bob.txt
-    new file mode 100644
-    index 0000000..e69de29
+        diff --git a/file2.txt b/file2.txt
+        new file mode 100644
+        index 0000000..be1d686
+        --- /dev/null
+        +++ b/file2.txt
+        @@ -0,0 +1 @@
+        +file contents
+        diff --git a/test.txt b/test.txt
+        new file mode 100644
+        index 0000000..f2aa86d
+        --- /dev/null
+        +++ b/test.txt
+        @@ -0,0 +1 @@
+        +hello
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Help-browser.svg/20px-Help-browser.svg.png)
-Stuck? Ask for help from the workshop staff
+![image](https://github.com/user-attachments/assets/b6a832b9-35ab-487b-be9b-79a6f19512bd)
 
-A necessary digression
+
+Another feature of git
 ----------------------
 
 In this section, we are going to add more changes, and try to recover
 from mistakes.
 
 Be forewarned, this next step is going to be hard. We will need to add
-some content to alice.txt.
+some content to test.txt.
 
-Open `alice.txt` and type in your favourite line from a song, or:
+Open `test.txt` in notepad or using the command below, to add any new text into the file.
 
-e.g. Lorem ipsum Sed ut perspiciatis, unde omnis iste natus error sit
-voluptatem accusantium doloremque laudantium
+        $ echo This is a new line of text in the test file. > test.txt
 
-Then **save** the file
+If using notepad, remember to **save** the file.
 
-What did we change? A very useful command is `git diff`. This is very
-useful to see exactly what changes you have done.
+Now we may want to see what has changed in the file. A very useful command is `git diff`.
+This is very useful to see exactly what changes you have done.
 
     $ git diff
 
 You should see something like the following:
 
-    diff --git a/alice.txt b/alice.txt
-    index e69de29..2aedcab 100644
-    --- a/alice.txt
-    +++ b/alice.txt
-    @@ -0,0 +1 @@
-    +Lorem ipsum Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium
+    diff --git a/test.txt b/test.txt
+    index f2aa86d..7ca0bdf 100644
+    --- a/test.txt
+    +++ b/test.txt
+    @@ -1 +1 @@
+    -hello
+    +This is a new line of text in the test file.
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Help-browser.svg/20px-Help-browser.svg.png)
-Stuck? Ask for help from the workshop staff
+![image](https://github.com/user-attachments/assets/591cf27b-0429-4de8-8c31-4c1e1c06f895)
+
 
 Staging area again
 ------------------
 
-Now let’s add our modified file, `alice.txt` to the staging area. Do you
-remember how ?
+Now let’s add our modified file, `test.txt` to the staging area. Do you
+remember how? Use the git add command shown below.
 
-Next, check the `status` of `alice.txt`. Is it in the staging area now?
+    $ git add test.txt
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Help-browser.svg/20px-Help-browser.svg.png)
-Stuck? Ask for help from the workshop staff
+Next, check the `status` of `test.txt`. Is it in the staging area now?
+Status can be checked using the git status command.
+
+    $ git status
+
+You should see something like this:
+
+C:\Users\nv266\git-workshop>git status
+On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   test.txt
+
+![image](https://github.com/user-attachments/assets/17c29467-1edd-4482-b778-d6639b36c7b8)
+
 
 Undoing
 -------
 
-Let’s say we did not like putting Lorem ipsum into `alice.txt`. One
+Let’s say we changed our mind about putting the new text into `test.txt`. One
 advantage of a staging area is to enable us to back out before we
 commit - which is a bit harder to back out of. Remembering the mail
 analogy - it’s easier to take mail out of the cardboard box before you
@@ -194,37 +247,54 @@ seal it than after.
 
 Here’s how to back out of the staging area :
 
-    $ git reset HEAD alice.txt
+    $ git reset HEAD test.txt
 
+You should see this message:
     Unstaged changes after reset:
-    M   alice.txt
+    M   test.txt
+
+![image](https://github.com/user-attachments/assets/3127466e-3797-4efb-bcfa-43c0208b24c1)
 
 Compare the `git status` now to the git status from the previous
 section. How does it differ?
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Help-browser.svg/20px-Help-browser.svg.png)
-Stuck? Ask for help from the workshop staff
+    $ git status
 
-Your staging area should now be empty. What’s happened to the Lorem
-Ipsum changes? It’s still there. We are now back to the state just
+Now there should be no changes, so it shows this message:
+
+"no changes added to commit (use "git add" and/or "git commit -a")"
+
+Your staging area should now be empty. 
+
+But what’s happened to the new text changes that we added? 
+It’s still there. We are now back to the state just
 before we added this file to staging area. Going back to the mail
 analogy, we just took our letter out of the box.
+
+Open the 'test.txt' file to check the contents:
+
+    $ test.txt
+
+You will see that the new text that was added to the file is still there:
+
+This is a new line of text in the test file. 
 
 Undoing II
 ----------
 
 Sometimes we did not like what we have done and we wish to go back to
 the last *recorded* state. In this case, we wish to go back to the state
-just before we added the Lorrem ipsum text to `alice.txt`.
+just before we added the new text to `test.txt`.
 
 To accomplish this, we use `git checkout`, like so:
 
-    $ git checkout alice.txt
+    $ git checkout test.txt
 
-You have now un-done your changes. Your file is now empty.
+You have now un-done your changes. 
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Help-browser.svg/20px-Help-browser.svg.png)
-Stuck? Ask for help from the workshop staff
+    $ test.txt
+
+You will see that the test.txt file now has reverted to the original text 'hello'.
 
 Branching
 ---------
@@ -242,7 +312,9 @@ itself, will list the branches you currently have
     $ git branch
 
 The `*` should indicate the current branch you are on, which is
-`master`.
+`main`.
+
+![image](https://github.com/user-attachments/assets/0e61002f-fcca-4349-86e2-080951a6004b)
 
 If you wish to start another branch, use
 `git checkout -b (new-branch-name)` :
@@ -252,8 +324,8 @@ If you wish to start another branch, use
 Try git branch again to check which branch you are currently on:
 
     $ git branch
-      exp1
-    * master
+    * exp1
+      main
 
 The new branch is now created. Now let’s work in that branch. To switch
 to the new branch:
@@ -264,43 +336,55 @@ to the new branch:
 
 Let’s perform some commits now,
 
-    $ echo 'some content' > test.txt
-    $ git add test.txt
+    $ echo 'experimental content' > exp.txt
+    $ git add exp.txt
     $ git commit -m "Added experimental txt"
 
-Now, let’s compare them to the master branch. Use `git diff`
+Now, let’s compare them to the main branch. Use `git diff`
 
-    $ git diff master
+    $ git diff main
 
-Basically what the above output says is that `test.txt` is present on
+![image](https://github.com/user-attachments/assets/0f7b48ea-8048-40b1-af0a-78dd7d16f301)
+
+Basically what the above output says is that `exp.txt` is present on
 the `exp1` branch, but is absent on the `master` branch.
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Help-browser.svg/20px-Help-browser.svg.png)
-Stuck? Ask for help from the workshop staff
-
-Now you see me, now you don’t
------------------------------
+Disappearing Files between branches
+-----------------------------------
 
 Git is good enough to handle your files when you switch between
 branches. Switch back to the `master` branch
 
-Try switching back to the master branch (Hint: It’s the same command we
+Try switching back to the main branch (Hint: It’s the same command we
 used to switch to the exp1 branch above)
 
-Now, where’s our `test.txt` file ?
+    $ git checkout main
 
-    $ ls
-    README.textile  alice.txt   bob.txt     gamow.txt
+Now, where’s our `exp.txt` file ?
 
-As you can see the new file you created in the other branch has
-disappeared. Not to worry, it is safely tucked away, and will re-appear
+    $ dir
+    README.md  text.txt   file2.txt
+
+As you can see the new file 'exp.txt' you created in the other 'exp1' branch has
+disappeared. 
+
+Even if you open the folder in windows explorer, the file is still disappeared:
+
+$ start C:\Users\nv266\git-workshop
+
+Not to worry, the exp.txt file is safely tucked away, and will re-appear
 when you switch back to that branch.
 
 Now, switch back to the exp1 branch, and check that the `test.txt` is
 now present.
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Help-browser.svg/20px-Help-browser.svg.png)
-Stuck? Ask for help from the workshop staff
+    $ git checkout exp1
+    $ dir
+
+    README.md  text.txt   file2.txt   exp.txt
+
+Note that if you create a new file in one branch but do not use 
+git add and git commit, then the file will be visible from other branches.
 
 Merging
 -------
@@ -309,52 +393,80 @@ We now try out merging. Eventually you will want to merge two branches
 together after the conclusion of work.\
 `git merge` allows you to do that.
 
-Git merging works by first switching the branch you want to *into*, and
-then running the command to merge the other branch in.
+Git merging works by first switching into the branch you want to
+merge *into*, and then running the command to merge the other branch in.
 
-We now want to merge our `exp1` branch into `master`. First, switch to
+We now want to merge our `exp1` branch into `main`. First, switch to
 the `master` branch.
 
-    git checkout master
+    git checkout main
 
-Next, we merge the `exp1` branch into `master` :
+Next, we merge the `exp1` branch into `main` :
 
     $ git merge exp1
 
-Do you see the following output ?
+Do you see something like the following output ?
 
     Merge made by recursive.
      test.txt |    1 +
      1 files changed, 1 insertions(+), 0 deletions(-)
      create mode 100644 test.txt
 
+If one of the other files in exp1 branch had also been modified
+as well, the message may be showing 2 file changes instead of 1.
+
+![image](https://github.com/user-attachments/assets/00e0bb89-2d94-4e48-88b7-c9ad1f83768d)
+
 You have to be in the branch you want merge *into* and then you always
 specify the branch you want to merge.
 
 At this point, you can also try out `gitk` to visualize the changes and
-how the two branches have merged
+how the two branches have merged. This may be available on linux but 
+may need to be installed seperately, so you can skip this 'gitk' step.
+
+If you wanted to you could now remove the experimental 'exp1' branch,
+but there’s no harm in keeping it. You may need to look back at it in future.
+
 
 Merge Conflicts
 ---------------
 
-Git is pretty good at merging automagically, even when the same file is
+Git is pretty good at merging automatically, even when the same file is
 edited. There are however, some situations where the same line of code
 is edited there is no way a computer can figure out how to merge.\
 This will trigger a conflict which you will have to fix.
 
-We now practise fixing merge conflicts. Recall that conflicts are caused
+We'll now practise fixing merge conflicts. Recall that conflicts are caused
 by merges which affect the same block of code.
 
-Here’s a branch I prepared earlier. The branch is called `alpher`. Run
-the code below to set it up (don’t worry if you can’t understand it)
+Create a new branch called newbranch
 
-    $ git checkout alpher
+    $ git checkout -b newbranch
 
-You should now have a new branch called `alpher`. Try merging that
-branch into `master` now and fix the ensuing conflict.
+Now you can modify the code.txt file by swapping the order of the numbers
+in the add and multiply sections.
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Help-browser.svg/20px-Help-browser.svg.png)
-Stuck? Ask for help from the workshop staff
+    $ code.txt
+
+Swap "sum = num1 + num2;" for "sum = num2 + num1;"
+Swap "product = num1 * num2" for "product = num2 * num1"
+Close and save the code.txt file.
+
+When you use git diff to compare the two versions of code.txt you will see this:
+
+    $ git diff main
+
+![image](https://github.com/user-attachments/assets/702a26d3-3bd9-4b40-b591-67d45523fd23)
+
+Now we will try to merge the two versions together:
+
+    $ git checkout main
+    $ git merge newbranch
+
+Now you will see this merge error. It was not able to automatically merge:
+
+![image](https://github.com/user-attachments/assets/b6997208-d29b-461c-923b-02b2e6229ace)
+
 
 Fixing a conflict
 -----------------
@@ -502,11 +614,4 @@ I throughly recommend these resources to continue your Git practice:
 -   <a href="http://gitref.org">http://gitref.org</a>
 -   <a href="http://www.kernel.org/pub/software/scm/git/docs/everyday.html">http://www.kernel.org/pub/software/scm/git/docs/everyday.html</a>
 
-Author
-------
 
-This work is licensed under the Creative Commons
-Attribution-NonCommercial-ShareAlike 3.0 License\
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">http://creativecommons.org/licenses/by-nc-sa/3.0/</a>\
-Author: Thong Kuah\
-Contributors: Andy Newport, Nick Malcolm
