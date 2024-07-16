@@ -14,10 +14,10 @@ int main() {
     scanf("%f", &num2);
 
     // Perform addition
-    sum = num1 + num2;
+    sum = num2 + num1;
 
     // Perform multiplication
-    product = num1 * num2;
+    product = num2 * num1;
 
     // Display the results
     printf("Sum: %.2f\n", sum);
