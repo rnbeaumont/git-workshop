@@ -1,7 +1,7 @@
 HPDM172 Git Tutorial 2024-2025
 
-What is Git ?
-=============
+Introduction to Git on command line
+===================================
 
 Git is a *distributed* **version control** system [1]
 
@@ -285,8 +285,8 @@ You will see that the new text that was added to the file is still there:
 
 This is a new line of text in the test file. 
 
-Undoing II
-----------
+Undoing changes part 2
+----------------------
 
 Sometimes we did not like what we have done and we wish to go back to
 the last *recorded* state. In this case, we wish to go back to the state
