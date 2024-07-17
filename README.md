@@ -1,7 +1,7 @@
-HPDM172 Git Tutorial - University of Exeter - 2024
+HPDM172 Git Tutorial 2024-2025
 
-What is Git ?
-=============
+Introduction to Git on command line
+===================================
 
 Git is a *distributed* **version control** system [1]
 
@@ -13,7 +13,7 @@ Getting Git
 This tutorial assumes you have Git installed,
 (hopefully \>= 1.7.0).
 
-On windows, you can check which version of Git is installed using 
+On windows, you can check which version of Git is installed by running git –version on the command line. 
 Press windows-r to open the run dialog. Then type cmd and enter.
 
 In the command prompt window, type git --version
@@ -29,11 +29,15 @@ Or you may see this: 'git' is not recognized as an internal or external command,
 If you don't have git installed yet, you can install it from downloads on the git homepage or you can
 install [Github's git GUI](https://help.github.com/articles/set-up-git/).
 
+Git should already be pre-installed on the PCs in the computer lab room.
+
+
 Setup
 -----
 
-For setup something you can do to start is setup your identity. This identifies you to
-other people who download the project.
+After Git is installed and ready to use, To setup your instance of Git, something you can do to start 
+is setup your identity. This identifies you to other people who download Git projects that you’ve worked on. 
+To set your name and email, type this in the command line:.
 
     $ git config --global user.name "Your Name"
     $ git config --global user.email your.email@example.com
@@ -184,14 +188,14 @@ Another feature of git
 In this section, we are going to add more changes, and try to recover
 from mistakes.
 
-Be forewarned, this next step is going to be hard. We will need to add
-some content to test.txt.
+We will need to add some content to test.txt.
 
-Open `test.txt` in notepad or using the command below, to add any new text into the file.
-
-        $ echo This is a new line of text in the test file. > test.txt
-
+Open `test.txt` in notepad and add some text and then save and close it.
 If using notepad, remember to **save** the file.
+
+Alternatively, use the command below, to add any new text into the file.
+
+    $ echo This is a new line of text in the test file. > test.txt
 
 Now we may want to see what has changed in the file. A very useful command is `git diff`.
 This is very useful to see exactly what changes you have done.
@@ -238,8 +242,8 @@ Changes to be committed:
 ![image](https://github.com/user-attachments/assets/17c29467-1edd-4482-b778-d6639b36c7b8)
 
 
-Undoing
--------
+Undoing changes
+---------------
 
 Let’s say we changed our mind about putting the new text into `test.txt`. One
 advantage of a staging area is to enable us to back out before we
@@ -281,8 +285,8 @@ You will see that the new text that was added to the file is still there:
 
 This is a new line of text in the test file. 
 
-Undoing II
-----------
+Undoing changes part 2
+----------------------
 
 Sometimes we did not like what we have done and we wish to go back to
 the last *recorded* state. In this case, we wish to go back to the state
@@ -292,7 +296,7 @@ To accomplish this, we use `git checkout`, like so:
 
     $ git checkout test.txt
 
-You have now un-done your changes. 
+You have now un-done your changes. Open the file to verify that the changes have gone.
 
     $ test.txt
 
@@ -439,79 +443,106 @@ is edited there is no way a computer can figure out how to merge.\
 This will trigger a conflict which you will have to fix.
 
 We'll now practise fixing merge conflicts. Recall that conflicts are caused
-by merges which affect the same block of code.
+by merges which affect the same line of code edited in two different ways.
+To demonstrate, let's modify code.txt differently in two branches.
 
-Create a new branch called newbranch
+Create 2 new branches called b1 and b2. 
 
-    $ git checkout -b newbranch
+    $ git checkout -b b1
+    $ git checkout -b b2
 
-Now you can modify the code.txt file by swapping the order of the numbers
-in the add and multiply sections.
+We are currently in branch b2, modify the code.txt file.
 
     $ code.txt
 
-For example:
+For example, modify the addition line:
 Swap "sum = num1 + num2;" for "sum = num2 + num1;"
-Swap "product = num1 * num2" for "product = num2 * num1"
 Close and save the code.txt file.
 
-When you use git diff to compare the two versions of code.txt you will see this:
+Next run these two commands to commit the changes to code.txt in the branch b2
 
-    $ git diff main
+    $ git add code.txt
+    $ git commit -m "modified the code.txt in b2"
+
+Now we'll do a similar but slightly different change to the same line of 
+code in the other branch b1. First swap over into branch b1:
+
+    $ git checkout b1
+
+Now you can modify the code.txt file by modifying the addition line.
+
+    $ code.txt
+
+For example, this time change it differently:
+Swap "sum = num1 + num2;" for "sum = num1 + num2 + num2;"
+Close and save the code.txt file.
+
+Next run these two commands to commit the changes to code.txt in the branch b2
+
+    $ git add code.txt
+    $ git commit -m "modified the code.txt in b1"
+
+![image](https://github.com/user-attachments/assets/faa3db97-21d8-4952-81a1-f0e95041e7eb)
+
+When you use git diff to compare the two versions of code.txt you can see your changes:
+
+    $ git diff b2
 
 ![image](https://github.com/user-attachments/assets/702a26d3-3bd9-4b40-b591-67d45523fd23)
 
-Now we will try to merge the two versions together:
+Now we will try to merge branch b1 into the current branch b2, which should fail:
 
-    $ git checkout main
-    $ git merge newbranch
+    $ git merge b2
 
 Now you will see this merge error. It was not able to automatically merge:
+Because the same line of code was modified in two different ways at the same time.
 
 ![image](https://github.com/user-attachments/assets/b6997208-d29b-461c-923b-02b2e6229ace)
 
+    Auto-merging code.txt
+    CONFLICT (content): Merge conflict in code.txt
+    Automatic merge failed; fix conflicts and then commit the result.
 
 Fixing a conflict
 -----------------
 
-You should see a `conflict` with the `gamow.txt` file. This means that
-the same line of text was edited and committed on both the master branch
-and the alpher branch. The output below basically tells you the current
-situation :
+Now you can open the code.txt to see the conflict that git has found:
 
-    Auto-merging gamow.txt
-    CONFLICT (content): Merge conflict in gamow.txt
-    Automatic merge failed; fix conflicts and then commit the result.
+    $ code.txt
 
-If you open the `gamow.txt` file, you will see something similar as
+You should see a `conflict` and somethng like <<<<<<< HEAD in code.txt.
+Git has added this into the code.txt file to show which line has a conflict.
+You can now choose which version to keep, and delete the other lines from the file.
+When you have deleted the line of code you don't want to keep, close and save the code.txt file.
+
+If you open the `code.txt` file, you will see something similar as
 below:
 
-    $ cat gamow.txt
+    $ code.txt
+    // Perform addition
     <<<<<<< HEAD
-    It was eventually recognized that most of the heavy elements observed in the present universe are the result of stellar nucleosynthesis (http://en.wikipedia.org/wiki/Stellar_nucleosynthesis) in stars, a theory largely developed by Bethe.
+    sum = num1 + num2+num2;
     =======
-
-    http://en.wikipedia.org/wiki/Stellar_nucleosynthesis
-    Stellar nucleosynthesis is the collective term for the nuclear reactions taking place in stars to build the nuclei of the elements heavier than hydrogen. Some small quantity of these reactions also occur on the stellar surface under various circumstances. For the creation of elements during the explosion of a star, the term supernova nucleosynthesis is used.
-    >>>>>>> alpher
+    sum = num2 + num1;
+    >>>>>>> b2
 
 Git uses pretty much standard conflict resolution markers. The top part
 of the block, which is everything between `<<<<<< HEAD` and `======` is
-what was in your current branch.\
-The bottom half is the version that is present from the `alpher` branch.
+what was in your current b1 branch.\
+The bottom half is the version that is present from the b2 branch.
 To resolve the conflict, you either choose one side or merge them as you
 see fit.
 
-For example, I might decide to choose the version from the `alpher`
+For example, I might decide to choose the version from the b2
 branch.
 
 Now, try to **fix the merge conflict**. Pick the text that you think is
-better (Ask for help if stumped)
+better. In this example, you can choose to keep either version.
 
 Once I have done that, I can then mark the conflict as fixed by using
 `git add` and `git commit`.
 
-    $ git add gamow.txt
+    $ git add code.txt
     $ git commit -m "Fixed conflict"
 
 Congratulations. You have fixed the conflict. All is good in the world.
@@ -530,9 +561,9 @@ You have learnt :
 7.  Fixing conflicts
 
 
-Now You can choose two tracks, either Part II (below) which covers time travel and
-mangling your git history, or Part III (even below-er) which covers Github pull
-requests and cat gifs.
+Now You can choose two tracks, either Part II which covers reverting files 
+to previous state by using  git history, or Part III which covers GitHub pull
+requests.
 
 Part II
 =======
@@ -546,8 +577,8 @@ Part III
 
 GitHub
 ------
-But, wait. There’s more. What about this distributed sharing thing with
-Git ?
+So far we have used Git itself. In this section will look at GitHub, which is
+a server for distributed sharing of your projects using Git.
 
 To be able to share, we’ll need a server to host our git repositiories.
 GitHub (<a href="https://github.com/">github.com</a>) is probably the
@@ -568,8 +599,6 @@ up.
 Hint: You may need to setup git cache your GitHub password - see
 <a href="https://help.github.com/articles/set-up-git">https://help.github.com/articles/set-up-git</a>
 
-Then come back here, we’ll wait.
-
 Create your first GitHub repository
 -----------------------------------
 
@@ -578,20 +607,17 @@ practising on your very own repo just now in Part 1!
 
 The following <a href="https://help.github.com/articles/create-a-repo">
 tutorial</a> will show you how to create a GitHub repo - which you can
-then share with others
-
-Then come back here, we’ll wait.
+then share with others.
 
 Fork a repo
 -----------
 
 Go to [this tutorial](https://help.github.com/articles/fork-a-repo)
-Then come back here, we’ll wait.
 
-Let’s collaborate !
--------------------
+Pull Request
+------------
 
-Check out the `pull_request` branch on this repository for further instructions!
+Have a look at `pull_request` branch on this repository for further instructions!
 You can always get back to this version of the readme by checking out the master branch.
 
 The End
@@ -605,7 +631,7 @@ You have learnt:
 
 ### References and Further reading
 
-I throughly recommend these resources to continue your Git practice:
+Here are some recommended  resources to continue Git practice:
 
 -   <a href="http://try.github.com">http://try.github.com</a> Another
     beginners tutorial for git
