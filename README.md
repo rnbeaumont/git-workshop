@@ -13,7 +13,7 @@ Getting Git
 This tutorial assumes you have Git installed,
 (hopefully \>= 1.7.0).
 
-On windows, you can check which version of Git is installed using 
+On windows, you can check which version of Git is installed by running git –version on the command line. 
 Press windows-r to open the run dialog. Then type cmd and enter.
 
 In the command prompt window, type git --version
@@ -29,11 +29,15 @@ Or you may see this: 'git' is not recognized as an internal or external command,
 If you don't have git installed yet, you can install it from downloads on the git homepage or you can
 install [Github's git GUI](https://help.github.com/articles/set-up-git/).
 
+Git should already be pre-installed on the PCs in the computer lab room.
+
+
 Setup
 -----
 
-For setup something you can do to start is setup your identity. This identifies you to
-other people who download the project.
+After Git is installed and ready to use, To setup your instance of Git, something you can do to start 
+is setup your identity. This identifies you to other people who download Git projects that you’ve worked on. 
+To set your name and email, type this in the command line:.
 
     $ git config --global user.name "Your Name"
     $ git config --global user.email your.email@example.com
