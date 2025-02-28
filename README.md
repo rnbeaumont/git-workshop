@@ -61,7 +61,7 @@ Next, move into the git repository folder and list the contents, by using these 
 
 To explore further, you can also check to see if there are also hidden files.
 
-    $ ls /a:h
+    $ ls -la
 
 ![image](https://github.com/user-attachments/assets/8636fc9d-e724-4daa-b85e-4c280349dad1)
 
