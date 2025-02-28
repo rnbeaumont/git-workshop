@@ -144,7 +144,7 @@ involved in each commit. To view more information about a commit, use
 You should see something similar to:
 
     commit 5a1fad96c8584b2c194c229de7e112e4c84e5089
-    Author: NeilVaughan
+    Author: RNBeaumont
     Date:   Sun Jul 16 13:13:42 2024 +0100
 
         I am adding two new files
