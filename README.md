@@ -55,13 +55,13 @@ This will cause an error because we have not navigated into the git repository f
 Next, move into the git repository folder and list the contents, by using these commands:
 
     $ cd git-workshop
-    $ dir
+    $ ls
 
 ![image](https://github.com/user-attachments/assets/09d9d9ce-97fb-4ded-b804-277595754665)
 
 To explore further, you can also check to see if there are also hidden files.
 
-    $ dir /a:h
+    $ ls /a:h
 
 ![image](https://github.com/user-attachments/assets/8636fc9d-e724-4daa-b85e-4c280349dad1)
 
@@ -69,7 +69,7 @@ You should also see hidden the `.git` subdirectory. This is
 where all your repository’s data and history is kept.
 
     $ cd .git
-    $ dir
+    $ ls
 
 You will see :
 
@@ -353,7 +353,7 @@ used to switch to the exp1 branch above)
 
 Now, where’s our `exp.txt` file ?
 
-    $ dir
+    $ ls
     README.md  text.txt   file2.txt
 
 As you can see the new file 'exp.txt' you created in the other 'exp1' branch has
@@ -370,7 +370,7 @@ Now, switch back to the exp1 branch, and check that the `test.txt` is
 now present.
 
     $ git checkout exp1
-    $ dir
+    $ ls
 
     README.md  text.txt   file2.txt   exp.txt
 
