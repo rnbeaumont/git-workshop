@@ -1,4 +1,4 @@
-HPDM172 Git Tutorial 2024-2025
+HPDM206Z Git Tutorial
 
 Introduction to Git on command line
 ===================================
@@ -10,48 +10,33 @@ Git is a *distributed* **version control** system [1]
 Getting Git
 -----------
 
-This tutorial assumes you have Git installed,
-(hopefully \>= 1.7.0).
+This tutorial assumes you have Git installed, (hopefully >= 1.7.0). It is recommended to work on your OpenStack instance where Git is already installed. 
 
-On windows, you can check which version of Git is installed by running git –version on the command line. 
-Press windows-r to open the run dialog. Then type cmd and enter.
+ 
 
-In the command prompt window, type git --version
-
-You may see a response such as: git version 2.28.0.windows.1. This means you have git installed.
-
-![image](https://github.com/user-attachments/assets/349809ca-063b-44e8-8654-f6ece4247f97)
-
-Or you may see this: 'git' is not recognized as an internal or external command, operable program or batch file. If you see this, it means you do not have git installed yet.
-
-![image](https://github.com/user-attachments/assets/19ddfae8-6446-435c-bd3e-8540bcf93ef6)
-
-If you don't have git installed yet, you can install it from downloads on the git homepage or you can
-install [Github's git GUI](https://help.github.com/articles/set-up-git/).
-
-Git should already be pre-installed on the PCs in the computer lab room.
+You can also install Git on your own computer by downloading the installer from the Git website. Instructions for doing this will not be given in this workshop and all examples will assume you are working on your OpenStack instance. 
 
 
 Setup
 -----
 
-After Git is installed and ready to use, To setup your instance of Git, something you can do to start 
-is setup your identity. This identifies you to other people who download Git projects that you’ve worked on. 
-To set your name and email, type this in the command line:.
+The first thing to do is setup your git credentials. To start with, setup your identity. This identifies you to other people who download Git projects that you’ve worked on. To set your name and email, type this in the command line: 
 
     $ git config --global user.name "Your Name"
     $ git config --global user.email your.email@example.com
 
 As a helpful step, if you're run Linux, you may want to set Git to use your favourite editor
 
-    $ git config --global core.editor emacs
+    $ git config --global core.editor vim
+
+You may choose any available editor, but the ones we’ve covered in this course are nano and vim, so you may want to change this to one of those (the example command uses vim).
 
 First steps - starting with Git on command line
 -----------------------------------------------
 
 First, clone this repository:
 
-    $ git clone https://github.com/neilvaughan/git-workshop.git
+    $ git clone https://github.com/rnbeaumont/git-workshop.git
 
 You may want to fork (create your own copy of) the project on github and
 clone from your own repo. You can find the fork button at the top right of
